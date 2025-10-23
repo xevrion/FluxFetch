@@ -93,7 +93,6 @@ class FallbackDownloader(QtCore.QObject):
 
 
 def get_direct_url(page_url):
-    """Extract the real download link from a page with window.open() JS."""
     try:
         r = requests.get(page_url, timeout=10)
         if r.status_code != 200:
@@ -223,11 +222,9 @@ class MainWindow(QMainWindow):
         if not dest_dir: return
         self.last_dest_dir = dest_dir
 
-        # select checked items
         selected = [it for it in self.items if self.table.cellWidget(it['row'],0).isChecked()]
         if not selected: return
 
-        # Resolve real URLs before download
         for it in selected:
             it['status_item'].setText('resolving link...')
             QtWidgets.QApplication.processEvents()
